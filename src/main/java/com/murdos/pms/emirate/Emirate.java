@@ -2,8 +2,10 @@ package com.murdos.pms.emirate;
 
 import com.murdos.pms.device.Device;
 import com.murdos.pms.salesman.Salesman;
+import com.murdos.pms.shop.Shop;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,8 +18,12 @@ public class Emirate {
     @Id
     private Long id;
     private String name;
+    @OneToMany(mappedBy = "emirate")
     private List<Device> devices;
+    @OneToMany(mappedBy = "emirate")
     private List<Salesman> salesMen;
+    @OneToMany(mappedBy = "emirate")
+    private List<Shop> shops;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -53,6 +59,14 @@ public class Emirate {
 
     public void setSalesMen(List<Salesman> salesMen) {
         this.salesMen = salesMen;
+    }
+
+    public List<Shop> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<Shop> shops) {
+        this.shops = shops;
     }
 
     public LocalDateTime getCreatedAt() {

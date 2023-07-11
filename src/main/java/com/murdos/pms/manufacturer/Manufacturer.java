@@ -1,7 +1,9 @@
 package com.murdos.pms.manufacturer;
 
 import com.murdos.pms.devicemodel.DeviceModel;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +16,7 @@ import java.util.List;
 public class Manufacturer {
     private String id;
     private String name;
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL)
     private List<DeviceModel> deviceModels;
     @CreatedDate
     private LocalDateTime createdAt;

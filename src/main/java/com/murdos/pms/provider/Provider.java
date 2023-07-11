@@ -1,11 +1,15 @@
 package com.murdos.pms.provider;
 
+import com.murdos.pms.device.Device;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Provider {
@@ -14,6 +18,8 @@ public class Provider {
     private String name;
     private String contactName;
     private String contactPhoneNumber;
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    private List<Device> devices;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -49,6 +55,14 @@ public class Provider {
 
     public void setContactPhoneNumber(String contactPhoneNumber) {
         this.contactPhoneNumber = contactPhoneNumber;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
 
     public LocalDateTime getCreatedAt() {

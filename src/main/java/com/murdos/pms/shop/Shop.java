@@ -79,6 +79,22 @@ public class Shop {
         this.lng = lng;
     }
 
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+
+    public Salesman getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

@@ -1,5 +1,6 @@
 package com.murdos.pms.salesman;
 
+import com.murdos.pms.device.Device;
 import com.murdos.pms.shop.Shop;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -19,6 +20,8 @@ public class Salesman {
     private String phoneNumber;
     @OneToMany(mappedBy = "salesman",cascade = CascadeType.ALL)
     private List<Shop> shops;
+    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL)
+    private List<Device> devices;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -46,6 +49,22 @@ public class Salesman {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Shop> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<Shop> shops) {
+        this.shops = shops;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
 
     public LocalDateTime getCreatedAt() {
