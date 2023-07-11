@@ -3,25 +3,31 @@ package com.murdos.pms.shop;
 import com.murdos.pms.device.Device;
 import com.murdos.pms.emirate.Emirate;
 import com.murdos.pms.salesman.Salesman;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-
+@Entity
 public class Shop {
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.UUID
+    )
     private String id;
     private String name;
-    private Emirate emirate;
-    private Salesman salesMan;
     private double lat;
     private double lng;
     @ManyToOne
+    @JoinColumn(name = "emirate_id")
+    private Emirate emirate;
+
+    @OneToMany
+    @JoinColumn(name = "device_id")
     private List<Device> devices;
     @ManyToOne
     @JoinColumn(name ="salesman_id")
@@ -30,6 +36,33 @@ public class Shop {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+    public Shop() {
+    }
+
+    public Shop(String id, String name, Emirate emirate,  double lat, double lng, List<Device> devices, Salesman salesman, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.name = name;
+        this.emirate = emirate;
+        this.salesman = salesman;
+        this.lat = lat;
+        this.lng = lng;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Shop(String name, Emirate emirate,  double lat, double lng, List<Device> devices, Salesman salesman, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.name = name;
+        this.emirate = emirate;
+        this.salesman = salesman;
+        this.lat = lat;
+        this.lng = lng;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    
 
     public String getId() {
         return id;
@@ -56,11 +89,11 @@ public class Shop {
     }
 
     public Salesman getSalesMan() {
-        return salesMan;
+        return salesman;
     }
 
-    public void setSalesMan(Salesman salesMan) {
-        this.salesMan = salesMan;
+    public void setSalesMan(Salesman salesman) {
+        this.salesman = salesman;
     }
 
     public double getLat() {

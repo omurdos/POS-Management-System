@@ -1,8 +1,10 @@
 package com.murdos.pms.device;
 
 import com.murdos.pms.devicemodel.DeviceModel;
+import com.murdos.pms.emirate.Emirate;
 import com.murdos.pms.provider.Provider;
 import com.murdos.pms.salesman.Salesman;
+import com.murdos.pms.shop.Shop;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,6 +14,9 @@ import java.time.LocalDateTime;
 @Entity
 public class Device {
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.UUID
+    )
     private String id;
     private String serialNumber;
     private String imei;
@@ -24,11 +29,44 @@ public class Device {
     @ManyToOne
     @JoinColumn(name = "salesman_id")
     private Salesman salesman;
+
+    @ManyToOne
+    @JoinColumn(name = "emirate_id")
+    private Emirate emirate;
+
+    @ManyToOne
+    private Shop shop;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+
+    public Device() {
+    }
+
+    public Device(String id, String serialNumber, String imei, DeviceModel deviceModel, Provider provider, Salesman salesman, Shop shop, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.serialNumber = serialNumber;
+        this.imei = imei;
+        this.deviceModel = deviceModel;
+        this.provider = provider;
+        this.salesman = salesman;
+        this.shop = shop;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Device(String serialNumber, String imei, DeviceModel deviceModel, Provider provider, Salesman salesman, Shop shop, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.serialNumber = serialNumber;
+        this.imei = imei;
+        this.deviceModel = deviceModel;
+        this.provider = provider;
+        this.salesman = salesman;
+        this.shop = shop;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
 
     public String getId() {
         return id;
@@ -76,6 +114,14 @@ public class Device {
 
     public void setSalesman(Salesman salesman) {
         this.salesman = salesman;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public LocalDateTime getCreatedAt() {

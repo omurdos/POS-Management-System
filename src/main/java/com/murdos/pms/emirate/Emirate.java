@@ -3,9 +3,7 @@ package com.murdos.pms.emirate;
 import com.murdos.pms.device.Device;
 import com.murdos.pms.salesman.Salesman;
 import com.murdos.pms.shop.Shop;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,18 +14,43 @@ import java.util.List;
 public class Emirate {
 
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.AUTO
+    )
     private Long id;
     private String name;
     @OneToMany(mappedBy = "emirate")
     private List<Device> devices;
     @OneToMany(mappedBy = "emirate")
-    private List<Salesman> salesMen;
+    private List<Salesman> salesmen;
     @OneToMany(mappedBy = "emirate")
     private List<Shop> shops;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public Emirate() {
+    }
+
+    public Emirate(Long id, String name, List<Device> devices, List<Salesman> salesmen, List<Shop> shops, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.name = name;
+        this.devices = devices;
+        this.salesmen = salesmen;
+        this.shops = shops;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Emirate(String name, List<Device> devices, List<Salesman> salesmen, List<Shop> shops, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.name = name;
+        this.devices = devices;
+        this.salesmen = salesmen;
+        this.shops = shops;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
 
     public Long getId() {
         return id;
@@ -53,12 +76,12 @@ public class Emirate {
         this.devices = devices;
     }
 
-    public List<Salesman> getSalesMen() {
-        return salesMen;
+    public List<Salesman> getSalesmen() {
+        return salesmen;
     }
 
-    public void setSalesMen(List<Salesman> salesMen) {
-        this.salesMen = salesMen;
+    public void setSalesmen(List<Salesman> salesmen) {
+        this.salesmen = salesmen;
     }
 
     public List<Shop> getShops() {

@@ -1,10 +1,7 @@
 package com.murdos.pms.provider;
 
 import com.murdos.pms.device.Device;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,6 +11,9 @@ import java.util.List;
 @Entity
 public class Provider {
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.UUID
+    )
     private String id;
     private String name;
     private String contactName;
@@ -24,6 +24,28 @@ public class Provider {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public Provider() {
+    }
+
+    public Provider(String id, String name, String contactName, String contactPhoneNumber, List<Device> devices, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.name = name;
+        this.contactName = contactName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Provider(String name, String contactName, String contactPhoneNumber, List<Device> devices, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.name = name;
+        this.contactName = contactName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
 
     public String getId() {
         return id;

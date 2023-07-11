@@ -1,11 +1,9 @@
 package com.murdos.pms.salesman;
 
 import com.murdos.pms.device.Device;
+import com.murdos.pms.emirate.Emirate;
 import com.murdos.pms.shop.Shop;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,6 +13,9 @@ import java.util.List;
 @Entity
 public class Salesman {
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.UUID
+    )
     private String id;
     private String name;
     private String phoneNumber;
@@ -22,10 +23,36 @@ public class Salesman {
     private List<Shop> shops;
     @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL)
     private List<Device> devices;
+    @ManyToOne
+    @JoinColumn(name = "emirate_id")
+    private Emirate emirate;
+
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public Salesman() {
+    }
+
+    public Salesman(String id, String name, String phoneNumber, List<Shop> shops, List<Device> devices, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.shops = shops;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Salesman(String name, String phoneNumber, List<Shop> shops, List<Device> devices, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.shops = shops;
+        this.devices = devices;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
 
     public String getId() {
         return id;
